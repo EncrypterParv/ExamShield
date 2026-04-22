@@ -1,0 +1,112 @@
+export const students = [
+  {
+    id: 1,
+    name: "Aarav Sharma",
+    email: "aarav.sharma@university.edu",
+    rollNo: "CS2021001",
+    risk: "High",
+    flags: [
+      {
+        id: "f1",
+        reason: "Tab switch detected",
+        timestamp: "2026-04-22 10:12:34",
+        confidence: 82,
+        status: "Pending",
+      },
+      {
+        id: "f2",
+        reason: "Face not visible in camera",
+        timestamp: "2026-04-22 10:18:05",
+        confidence: 91,
+        status: "Pending",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Priya Patel",
+    email: "priya.patel@university.edu",
+    rollNo: "CS2021002",
+    risk: "Medium",
+    flags: [
+      {
+        id: "f3",
+        reason: "Multiple faces detected",
+        timestamp: "2026-04-22 10:25:11",
+        confidence: 67,
+        status: "Pending",
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Rohan Mehta",
+    email: "rohan.mehta@university.edu",
+    rollNo: "CS2021003",
+    risk: "Low",
+    flags: [],
+  },
+  {
+    id: 4,
+    name: "Sneha Iyer",
+    email: "sneha.iyer@university.edu",
+    rollNo: "CS2021004",
+    risk: "High",
+    flags: [
+      {
+        id: "f4",
+        reason: "Suspicious audio detected",
+        timestamp: "2026-04-22 10:30:47",
+        confidence: 78,
+        status: "Pending",
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: "Kabir Singh",
+    email: "kabir.singh@university.edu",
+    rollNo: "CS2021005",
+    risk: "Low",
+    flags: [],
+  },
+  {
+    id: 6,
+    name: "Ananya Reddy",
+    email: "ananya.reddy@university.edu",
+    rollNo: "CS2021006",
+    risk: "Medium",
+    flags: [
+      {
+        id: "f5",
+        reason: "Copy-paste behavior detected",
+        timestamp: "2026-04-22 10:42:19",
+        confidence: 60,
+        status: "Reviewed",
+      },
+    ],
+  },
+];
+
+export const examQuestions = [
+  {
+    id: 1,
+    question:
+      "Which of the following data structures uses LIFO (Last In, First Out) order?",
+    options: ["Queue", "Stack", "Linked List", "Tree"],
+    correct: 1,
+  },
+  {
+    id: 2,
+    question: "What is the time complexity of Binary Search?",
+    options: ["O(n)", "O(n²)", "O(log n)", "O(n log n)"],
+    correct: 2,
+  },
+  {
+    id: 3,
+    question:
+      "Which HTTP method is used to update an existing resource in a REST API?",
+    options: ["GET", "POST", "PUT", "DELETE"],
+    correct: 2,
+  },
+];
