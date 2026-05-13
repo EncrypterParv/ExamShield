@@ -112,13 +112,22 @@ export default function useProctoring() {
     }
   }, [startRecorder, startMicAudio]);
 
-  // ── Grab last CLIP_SECONDS of buffer as a Blob URL ──────────────────────
+  // ── Grab last CLIP_SECONDS of buffer as a base64 data URL ─────────────
+  // Using FileReader → base64 instead of URL.createObjectURL so the recording
+  // survives localStorage serialisation and stays playable when faculty
+  // navigates to the review page in the same SPA session.
   const saveClip = useCallback(() => {
     const cutoff   = Date.now() - CLIP_SECONDS * 1000;
     const relevant = chunksRef.current.filter(c => c.ts >= cutoff).map(c => c.blob);
-    if (!relevant.length) return null;
+    if (!relevant.length) return Promise.resolve(null);
     const mime = recorderRef.current?.mimeType || "video/webm";
-    return URL.createObjectURL(new Blob(relevant, { type: mime }));
+    const blob = new Blob(relevant, { type: mime });
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);   // data:video/webm;base64,...
+      reader.onerror  = () => resolve(null);
+      reader.readAsDataURL(blob);
+    });
   }, []);
 
   // ── Take a screenshot from the screen stream via canvas ─────────────────
@@ -147,10 +156,14 @@ export default function useProctoring() {
     const audioLevel = audioLevelRef.current;
     const audio      = classifyAudio(audioLevel);
 
-    const screenshotDataUrl = await takeScreenshot();
+    // Run screenshot + clip encoding in parallel for speed
+    const [screenshotDataUrl, recordingDataUrl] = await Promise.all([
+      takeScreenshot(),
+      saveClip(),          // now returns Promise<base64 data URL | null>
+    ]);
 
     return {
-      recordingBlobUrl : saveClip(),
+      recordingBlobUrl : recordingDataUrl,   // field name kept for API compat
       screenshotDataUrl,
       audioObservation : audio.label,
       audioIcon        : audio.icon,
